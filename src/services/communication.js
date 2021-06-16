@@ -1,6 +1,6 @@
 import axios from "axios";
 var ip = "132.72.67.188";
-var port = "8020";
+var port = "8021";
 
 // upload flight log to the server's DB
 export async function upload_flight(file, locationTags, parameters){
@@ -11,7 +11,7 @@ export async function upload_flight(file, locationTags, parameters){
     formData.append("parameters", JSON.stringify(parameters));
 
     return axios.post('http://' + ip + ':' + port + '/upload_flight', formData, 
-    {
+    { 
         headers: {
         'Content-Type': 'multipart/form-data'
         },

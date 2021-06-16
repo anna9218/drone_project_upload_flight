@@ -15,6 +15,7 @@ class HomePage extends React.Component{
         super(props);
       }
 
+
     render(){
     return (
         <div>
@@ -40,7 +41,6 @@ class HomePage extends React.Component{
         </div>
         );
     }
-
 }
 
 export default HomePage;
