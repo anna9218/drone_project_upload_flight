@@ -1,4 +1,4 @@
-# drone_project_upload_flight
+# Drone Project - Upload Flight Application
 # Required Installations:
 > - npm i enzyme
 > - npm i @wojtekmaj/enzyme-adapter-react-17
