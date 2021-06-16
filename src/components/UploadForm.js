@@ -58,8 +58,18 @@ class UploadForm extends React.Component {
         this.state = {
             flightLog: '',
             fileName: 'Click here to upload',
-            locationTags: 'Enter the location tags',
+            locationTags: '',
         };
+    }
+
+
+
+    checkNotEmpty() {
+        const locationTags_ = this.state.locationTags;
+        const flightLog_ = this.state.flightLog;
+
+        if (locationTags_ === "" || flightLog_ === "") { return false; }
+        return true;
     }
 
 
@@ -67,15 +77,21 @@ class UploadForm extends React.Component {
      * Function to upload the file and additional parameters to the server.
      */
     uploadHandler() {
-        this.setState({ fileName: 'Click here to upload' });
-        this.setState({ locationTags: 'Enter the location tags' });
+        if (!this.checkNotEmpty()) { 
+            alert("Oops, some values are missing! Please insert the missing values");
+            return;
+        }
+        console.log(this.state.locationTags);
+
+        //TODO - HANDLE MULTIPLE LOCATION TAGS
 
         const promise = Service.upload_flight(this.state.flightLog, this.state.locationTags, parameters);
-
         promise.then((data) => {
             if (data !== undefined) {
                 if (data['data'] != null) {
                     alert(data['msg']);
+                    this.setState({ fileName: 'Click here to upload' });
+                    this.setState({ locationTags: '' });
                 }
                 else {
                     alert("Unable to receive a proper response from the server");
@@ -119,8 +135,11 @@ class UploadForm extends React.Component {
                 <Form.Group as={Row}>
                     <Form.Label column sm="4">Location Tags:</Form.Label>
                     <Col>
-                        <Form.Control id='location-tags' value={this.state.locationTags} placeholder={this.state.locationTags} 
+                        <Form.Control id='location-tags' value={this.state.locationTags} placeholder="Enter the location tags" 
                         onChange={event => {this.setState({ locationTags: event.target.value })}} type="text" />
+                        <Form.Text className="text-muted">
+                            Enter a single location, or multiple locations separted by ',' without spaces.
+                        </Form.Text>
                     </Col>
                 </Form.Group>
 
